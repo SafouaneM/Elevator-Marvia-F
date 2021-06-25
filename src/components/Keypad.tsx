@@ -5,8 +5,6 @@ type Props = {
     stops:any
     current:any
     next:any
-
-
 }
 
 
@@ -26,7 +24,7 @@ const Keypad:React.FC<Props> = (props) => {
 
     return  <div className="centered">
         <div className="floor-display">
-            <h1 className="floor-number">{ !props.next ? props.current : props.next }</h1>
+            <h1 className="floor-number">{ props.current }</h1>
         </div>
         <div className="flex-button-row">
             {renderButtons(6)}
