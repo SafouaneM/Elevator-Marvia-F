@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState,useRef} from 'react';
 import Elevator from './components/Elevator';
 import Keypad from './components/Keypad';
 
@@ -8,20 +8,20 @@ function App() {
 
     // const [stops,setStops] = useState([]);
     const [currentFloor,setCurrentFloor] = useState(0)
+    // const currentFloor:any = useRef(0);
+    // const [checkFloor, setCheckfloor] = useState(currentFloor.current)
     const [isMoving,setMoving] = useState(false)
     const [upcomingFloor,setUpcomingFloor] = useState(0)
 
-    let floorNumber:any = currentFloor;
+    let floorNumber:number = currentFloor;
     let interval:any;
 
     const handleButtonClick =  (e:any) => {
         if (e.target.value != currentFloor && !isMoving) {
-            console.log("click1")
+            console.log("click")
             setUpcomingFloor(e.target.value);
             // setMoving(true);
         }
-
-
         // const stop:any = parseInt(e.target.value);
         // // console.log(stop)
         // setStops((oldArray:any) => oldArray.concat(stop))
@@ -73,7 +73,6 @@ function App() {
         //         }, 1000);
         //     }
         // }
-
     }
 
     useEffect(() => {
@@ -90,12 +89,14 @@ function App() {
                 case (upcomingFloor > currentFloor):
                     interval = setInterval( () => {
                         movingUp()
+                        //upcoming floor is floor that is pressed, currentfloor is the floor we are currently on
+                        console.log(upcomingFloor,floorNumber)
                     }, 3000)
-
                     break;
             }
         }
         else {
+            console.log('je bent bij else aangekomen')
             clearInterval(interval)
         }
 
@@ -108,13 +109,18 @@ function App() {
             clearInterval(interval)
         }
     },[currentFloor])
+
     const movingUp = () => {
         // setInterval(() => {
         if (upcomingFloor == floorNumber) {
-            setMoving(false)
             setCurrentFloor(floorNumber)
+            clearInterval(interval)
+            setMoving(false)
+            // setCurrentFloor(floorNumber)
         } else {
-            floorNumber += 1;
+            floorNumber++;
+            setCurrentFloor(floorNumber)
+            console.log(floorNumber + 'dit is van else')
         }
         console.log("moving up ^")
             // setCurrentFloor(currentFloor + 1);
@@ -124,12 +130,22 @@ function App() {
         // console.log("interval here i am")
 
     }
-
     const movingDown = () => {
         // setInterval(() => {
         console.log("moving down")
+        if (upcomingFloor == floorNumber) {
+            setCurrentFloor(floorNumber)
+            clearInterval(interval)
+            setMoving(false)
+            // setCurrentFloor(floorNumber)
+        }
+        else {
+            floorNumber --;
+            setCurrentFloor(floorNumber)
+            console.log(floorNumber + 'dit is van else')
 
-        setCurrentFloor(currentFloor -1);
+        }
+        // setCurrentFloor(currentFloor -1);
         // }
         // },3000)
 
@@ -137,14 +153,22 @@ function App() {
 
     }
 
+    // useEffect(function () {
+    //     setTimeout(() => {
+    //         currentFloor.current = floorNumber
+    //     }, 1000); // Update the content of the element after 1second
+    // }, []);
+
     return (
     <div className="App">
       <header className="App-header">
           <div className="elevator-container">
-          <Elevator current={currentFloor} moving={isMoving}/>
+          <Elevator current={floorNumber} moving={isMoving}/>
     </div>
-          <Keypad onClick={handleButtonClick} stops={isMoving} current={floorNumber} next={upcomingFloor} />
-
+          <div className="floor-display">
+              <h1 className="floor-number">{currentFloor}</h1>
+          </div>
+          <Keypad onClick={handleButtonClick} stops={isMoving}  next={upcomingFloor} />
       </header>
     </div>
   );

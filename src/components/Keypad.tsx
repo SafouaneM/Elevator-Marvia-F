@@ -3,7 +3,6 @@ import React from 'react';
 type Props = {
     onClick:any
     stops:any
-    current:any
     next:any
 }
 
@@ -13,7 +12,7 @@ const Keypad:React.FC<Props> = (props) => {
 
     const renderButtons = (i:any) => {
         return(
-            <Button key={i} value={i} onClick={props.onClick} activeArray={props.stops} current={props.current} next={props.next}></Button>
+            <Button key={i} value={i} onClick={props.onClick} activeArray={props.stops}  next={props.next}/>
         );
     }
 
@@ -23,9 +22,7 @@ const Keypad:React.FC<Props> = (props) => {
 
 
     return  <div className="centered">
-        <div className="floor-display">
-            <h1 className="floor-number">{ props.current }</h1>
-        </div>
+
         <div className="flex-button-row">
             {renderButtons(6)}
         </div>

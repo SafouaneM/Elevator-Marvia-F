@@ -9,9 +9,7 @@ type Props = {
 const Elevator:React.FC<Props> = (props) => {
 
 
-    return (
-       <h1>Elevator</h1>
-    )
+    return <div>Elevator</div>
 }
 
 
