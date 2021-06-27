@@ -8,7 +8,7 @@ function App() {
 
     // const [stops,setStops] = useState([]);
     const [currentFloor,setCurrentFloor] = useState(0)
-    // const currentFloor:any = useRef(0);
+    const collectionFloor:any = useRef([]);
     // const [checkFloor, setCheckfloor] = useState(currentFloor.current)
     const [isMoving,setMoving] = useState(false)
     const [upcomingFloor,setUpcomingFloor] = useState(0)
@@ -16,70 +16,37 @@ function App() {
     let floorNumber:number = currentFloor;
     let interval:any;
 
+const buttonMovement = (direction:string) => {
+
+  if (direction == "up" && currentFloor != 6) {
+      setCurrentFloor(floorNumber+1)
+  } else if (direction == "down" && currentFloor != 0)
+  {
+      setCurrentFloor(floorNumber-1)
+  }
+}
+    let buttonInputTimeOut:any
+
     const handleButtonClick =  (e:any) => {
+
+
         if (e.target.value != currentFloor && !isMoving) {
-            console.log("click")
             setUpcomingFloor(e.target.value);
-            // setMoving(true);
+            // collectionFloor.current.push(e.target.value)
         }
-        // const stop:any = parseInt(e.target.value);
-        // // console.log(stop)
-        // setStops((oldArray:any) => oldArray.concat(stop))
-        //
-        // setTimeout(() => {
-        //     startElevator()
-        // }, 3000);
-        //
-        //
-        // const startElevator = () => {
-        //     const copyStops = [...stops];
-        //
-        //     let stop:any = copyStops.shift()
-        //     console.log(stops)
-        //     console.log(stop)
-        //     let counter:any = currentFloor;
-        //     let timer:any;
-        //     if(currentFloor < stop ) {
-        //         counter = currentFloor + 1;
-        //         setInterval(() => {
-        //             if(counter === stop) {
-        //                 setCurrentFloor(stop)
-        //                 setStops(copyStops)
-        //                 setUpcomingFloor(null)
-        //                 setMoving(true)
-        //             }
-        //             else {
-        //                setUpcomingFloor(counter)
-        //                 counter ++;
-        //             }
-        //         }, 1000);
-        //     }
-        //
-        //     if(currentFloor > stop) {
-        //         counter = currentFloor - 1;
-        //             timer = setInterval(() => {
-        //             if(counter === stop) {
-        //                 setCurrentFloor(stop)
-        //                 setUpcomingFloor(null)
-        //                 setStops(copyStops)
-        //                 setMoving(true)
-        //                 clearInterval(timer);
-        //             }
-        //             else {
-        //                 setUpcomingFloor(counter)
-        //                  // setCurrentFloor(null)
-        //                 counter --;
-        //             }
-        //         }, 1000);
-        //     }
-        // }
+
+
+        // clearTimeout(buttonInputTimeOut)
+        // buttonInputTimeOut = setTimeout(
+        //     // sortArray
+        //  ,3000)
     }
 
     useEffect(() => {
         if (!isMoving) {
             setMoving(true)
             floorNumber = currentFloor
-            console.log("effect upcomingfloor")
+            console.log("first useEffect")
             switch (true) {
                 case (upcomingFloor < currentFloor):
                        interval = setInterval(() => {
@@ -96,14 +63,14 @@ function App() {
             }
         }
         else {
-            console.log('je bent bij else aangekomen')
+            // console.log('je bent bij else aangekomen')
             clearInterval(interval)
         }
 
     }, [upcomingFloor])
 
     useEffect(() => {
-        console.log("second effect")
+        console.log("second useEffect")
         if (upcomingFloor == currentFloor) {
             setMoving(false)
             clearInterval(interval)
@@ -116,48 +83,40 @@ function App() {
             setCurrentFloor(floorNumber)
             clearInterval(interval)
             setMoving(false)
-            // setCurrentFloor(floorNumber)
         } else {
             floorNumber++;
             setCurrentFloor(floorNumber)
-            console.log(floorNumber + 'dit is van else')
+            // console.log(floorNumber + 'dit is van else')
         }
         console.log("moving up ^")
-            // setCurrentFloor(currentFloor + 1);
-        // }
-        // },3000)
-
-        // console.log("interval here i am")
-
     }
     const movingDown = () => {
-        // setInterval(() => {
         console.log("moving down")
         if (upcomingFloor == floorNumber) {
             setCurrentFloor(floorNumber)
             clearInterval(interval)
             setMoving(false)
-            // setCurrentFloor(floorNumber)
         }
         else {
             floorNumber --;
             setCurrentFloor(floorNumber)
-            console.log(floorNumber + 'dit is van else')
+            // console.log(floorNumber + 'dit is van else')
 
         }
-        // setCurrentFloor(currentFloor -1);
-        // }
-        // },3000)
 
-        // console.log("interval here i am")
 
     }
 
-    // useEffect(function () {
-    //     setTimeout(() => {
-    //         currentFloor.current = floorNumber
-    //     }, 1000); // Update the content of the element after 1second
-    // }, []);
+    // const sortArray = (testData:any) => {
+    //
+    // // console.log(collectionFloor)
+    //
+    //     for (let i = 0; i < collectionFloor.current.length; i++) {
+    //         console.log(collectionFloor.current[i])
+    //         setUpcomingFloor(collectionFloor.current[i])
+    //     }
+    //
+    // }
 
     return (
     <div className="App">
@@ -169,6 +128,18 @@ function App() {
               <h1 className="floor-number">{currentFloor}</h1>
           </div>
           <Keypad onClick={handleButtonClick} stops={isMoving}  next={upcomingFloor} />
+
+          <button className="test" onClick={ () => {
+              buttonMovement("up");
+          }}>
+             ^
+          </button>
+
+          <button className="test" onClick={ () => {
+              buttonMovement("down");
+          }}>
+              down
+          </button>
       </header>
     </div>
   );
