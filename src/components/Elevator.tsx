@@ -1,15 +1,16 @@
 import React from "react";
 
 type Props = {
-    current:any
-    moving:any
+active:any
 }
 
 
 const Elevator:React.FC<Props> = (props) => {
 
 
-    return <div>Elevator</div>
+return <h1>Elevator app</h1>
+
+
 }
 
 

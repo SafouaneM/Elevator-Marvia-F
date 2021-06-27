@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+.floor-number {
+  color: #cd1414;
+}
+
+.elevator-btn {
+border: 3px solid #b8b5b5;
+}
+
+.elevator-btn:active {
+ border: 3px solid #d26014;
+
+}
+

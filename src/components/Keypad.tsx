@@ -6,20 +6,13 @@ type Props = {
     next:any
 }
 
-
-
 const Keypad:React.FC<Props> = (props) => {
 
     const renderButtons = (i:any) => {
         return(
-            <Button key={i} value={i} onClick={props.onClick} activeArray={props.stops}  next={props.next}/>
+            <Button key={i} value={i} onClick={props.onClick} number={props.stops}  next={props.next}/>
         );
     }
-
-
-
-
-
 
     return  <div className="centered">
 
